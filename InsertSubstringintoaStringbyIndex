@@ -1,0 +1,47 @@
+//This code Inserts a substring into a String when the indexing is giveen i.e where you want to insert it.
+
+package com.testsigma.com.web.web;
+
+import com.testsigma.sdk.WebNLP;
+import com.testsigma.sdk.ApplicationType;
+import com.testsigma.sdk.annotation.NLP;
+import com.testsigma.sdk.annotation.TestData;
+import com.testsigma.sdk.annotation.UIIdentifier;
+import lombok.Data;
+import org.openqa.selenium.WebElement;
+
+@Data
+@NLP(grammar = "Insert Substring{value-count} into a String{value-count1} with index {value-count2} and Enter the data in element{element-locator}",
+        description = "Manipulates String with substring insertion based on Index",
+        applicationType = ApplicationType.WEB)
+public class InsertsubstringintoaStringbyIndex extends WebNLP {
+
+
+  @TestData(reference = "values-count")
+  private String testdata;
+  @TestData(reference = "values-count1")
+  private String testdata1;
+  @TestData(reference = "values-count2")
+  private int testdata2;
+  @UIIdentifier(reference = "element-locator")
+  private com.testsigma.sdk.UIIdentifier uiIdentifier;
+
+  
+ 
+  public void execute() throws Exception {
+	  String actualstring=testdata;
+	   String stringtobeinserted=testdata1;
+	   int index=testdata2;
+	   StringBuffer newString= new StringBuffer(actualstring);
+	   newString.insert(index + 1, stringtobeinserted);
+	   WebElement element = uiIdentifier.getElement();
+	   if(element.isDisplayed()) {
+		   log("Element is displayed, entering data");
+		      element.sendKeys(newString);
+	   }
+	   else{
+		      throw new Exception(String.format("Element with locator %s is not visible",uiIdentifier.getBy()));
+	   }
+	  
+  }
+}
