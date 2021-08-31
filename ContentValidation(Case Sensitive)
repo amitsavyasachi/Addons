@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @NLP(grammar = "Verify the data{testdatacount1} is present inside the content data{testdatacount2} (Case Sensitive)",
-        description = "validates options count in a select drop-down",
+        description = "validates desired content within a given content",
         applicationType = ApplicationType.WEB)
 public class ContentValidation extends WebNLP {
 
