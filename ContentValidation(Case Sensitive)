@@ -1,0 +1,45 @@
+//Validates contents using regex (Case Sensitive) Make sure the content you want to validate is with proper case to return true.
+
+
+
+import com.testsigma.sdk.WebNLP;
+import com.testsigma.sdk.ApplicationType;
+import com.testsigma.sdk.annotation.NLP;
+import com.testsigma.sdk.annotation.TestData;
+import lombok.Data;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@Data
+@NLP(grammar = "Verify the data{testdatacount1} is present inside the content data{testdatacount2} (Case Sensitive)",
+        description = "validates options count in a select drop-down",
+        applicationType = ApplicationType.WEB)
+public class ContentValidation extends WebNLP {
+
+
+  @TestData(reference = "testdatacount1")
+  private String testdata1;
+  @TestData(reference = "testdatacount2")
+  private String testdata2;
+ 
+
+  public void execute() throws Exception {
+	  String a=testdata1;
+	  String b=testdata2;
+	  //Regrex to split based on punctuation marks in Content
+	  String [] words=b.split("\\s+|,\\s*|\\.\\s*");              
+		List<String> al=new ArrayList();
+		al = Arrays.asList(a);
+		
+		 boolean ans = al.contains(a);
+		 
+		 if(ans) {
+			 log("Content is Present");
+		 }
+		 else {
+			 log("Content is Not Present");
+		 }
+		
+  }
+}
