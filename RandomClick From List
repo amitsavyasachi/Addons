@@ -1,0 +1,44 @@
+import com.testsigma.sdk.WebNLP;
+import com.testsigma.sdk.ApplicationType;
+import com.testsigma.sdk.annotation.NLP;
+import com.testsigma.sdk.annotation.TestData;
+import com.testsigma.sdk.annotation.UIIdentifier;
+import lombok.Data;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import java.util.List;
+import java.util.Random;
+
+@Data
+@NLP(grammar = "Click on random element with Xpath {values-count} from List",
+        description = "validates options count in a select drop-down",
+        applicationType = ApplicationType.WEB)
+public class RandomXpathbyList extends WebNLP {
+
+	 @TestData(reference = "values-count")
+	  private String testdata;
+
+  @UIIdentifier(reference = "element-locator")
+  private com.testsigma.sdk.UIIdentifier uiIdentifier;
+
+  public void execute() throws Exception { 
+    		 try {
+    			 List<WebElement> as=driver.findElements(By.xpath(testdata));
+    			 Thread.sleep(5000);
+    			 int a=as.size();
+    			 Random r = new Random();
+    			 int low = 1;
+    			 int high = a;
+    			 int randomint = r.nextInt(high-low) + low;
+    			 String Xpathnew="("+testdata+")"+"["+randomint+"]";
+    			 driver.findElement(By.xpath(Xpathnew)).click();
+    			
+    		 }
+    		 catch(Exception e) {
+    			log(e.getCause());
+    		 }		
+    		
+    	 }
+  
+}
